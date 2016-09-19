@@ -1,0 +1,118 @@
+<template name="Home_Page">
+
+  <div style="margin-top: 20px" class="ui container">
+
+    <form class="ui form">
+      <h4 class="ui dividing header">Student Data</h4>
+
+      <div class="field">
+        <label>Name</label>
+        <div class="two fields">
+          <div class="field">
+            <input type="text" name="first-name" placeholder="First Name">
+          </div>
+          <div class="field">
+            <input type="text" name="last-name" placeholder="Last Name">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Bio</label>
+        <textarea rows="5" name="bio" placeholder="Short (less than 1000 characters) biographical statement"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Hobbies</label>
+        <div class="fields">
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="surfing" checked="checked">
+              <label>Surfing</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="running">
+              <label>Running</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="biking">
+              <label>Biking</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="paddling">
+              <label>Paddling</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Level</label>
+        <div class="fields">
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="level" checked="checked">
+              <label>Freshman</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="level">
+              <label>Sophomore</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="level">
+              <label>Junior</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="level">
+              <label>Senior</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>GPA</label>
+        <div class="ui selection dropdown">
+          <input type="hidden" name="gender">
+          <i class="dropdown icon"></i>
+          <div class="default text">(Select One)</div>
+          <div class="menu">
+            <div class="item" data-value="4">4.0+</div>
+            <div class="item" data-value="3">3.0-3.9</div>
+            <div class="item" data-value="2">2.0-2.9</div>
+            <div class="item" data-value="1">1.0-1.9</div>
+          </div>
+        </div>
+      </div>
+
+        <div class="field">
+          <label>Majors</label>
+          <select multiple="" class="ui dropdown">
+            <option value="">Select Major(s)</option>
+            <option value="physics">Physics</option>
+            <option value="math">Math</option>
+            <option value="biology">Biology</option>
+            <option value="computerscience">Computer Science</option>
+          </select>
+        </div>
+
+
+
+        <div class="ui primary button" tabindex="0">Submit</div>
+    </form>
+
+
+  </div>
+</template>

@@ -1,0 +1,28 @@
+{
+  "name": "meteor-example-form",
+  "private": true,
+  "scripts": {
+    "start": "meteor",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "meteor-node-stubs": "~0.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.1",
+    "chai": "*",
+    "docdash": "^0.3.0",
+    "es6-enum": "^1.0.3",
+    "eslint": "^2.7.0",
+    "eslint-config-airbnb": "^7.0.0",
+    "eslint-plugin-jsx-a11y": "^0.6.2",
+    "eslint-plugin-meteor": "^3.4.0",
+    "eslint-plugin-react": "^4.3.0"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {"browsers": ["last 2 versions"]}
+    }
+  }
+}
