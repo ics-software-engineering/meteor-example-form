@@ -41,7 +41,6 @@ Template.Edit_Page.onCreated(function onCreated() {
 });
 
 Template.Edit_Page.onRendered(function enableSemantic() {
-
   const template = this;
   template.subscribe('StudentData', () => {
     // Wait for the data to load using the callback
