@@ -2,6 +2,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Template } from 'meteor/templating';
 import { StudentData } from '../../api/studentdata/studentdata.js';
 import { _ } from 'meteor/underscore';
+import { Tracker } from 'meteor/tracker';
 
 /* eslint-disable object-shorthand, no-unused-vars */
 
@@ -33,15 +34,29 @@ Template.Edit_Page.helpers({
 
 });
 
+Template.Edit_Page.onCreated(function onCreated() {
+  this.autorun(() => {
+    this.subscribe('StudentData');
+  });
+});
+
 Template.Edit_Page.onRendered(function enableSemantic() {
-  // Enable the single selection dropdown menu widget. (GPA)
-  this.$('.ui.selection.dropdown').dropdown();
-  // Enable the multiple selection dropdown widget. (Majors)
-  this.$('select.ui.dropdown').dropdown();
-  // Enable checkboxes (multiple selection)  (Hobbies)
-  this.$('.ui.checkbox').checkbox();
-  // Enable radio buttons (single selection)  (Level)
-  this.$('.ui.radio.checkbox').checkbox();
+
+  const template = this;
+  template.subscribe('StudentData', () => {
+    // Wait for the data to load using the callback
+    Tracker.afterFlush(() => {
+      // Use Tracker.afterFlush to wait for the UI to re-render
+      // Enable the single selection dropdown menu widget. (GPA)
+      template.$('.ui.selection.dropdown').dropdown();
+      // Enable the multiple selection dropdown widget. (Majors)
+      template.$('select.ui.dropdown').dropdown();
+      // Enable checkboxes (multiple selection)  (Hobbies)
+      template.$('.ui.checkbox').checkbox();
+      // Enable radio buttons (single selection)  (Level)
+      template.$('.ui.radio.checkbox').checkbox();
+    });
+  });
 });
 
 Template.Edit_Page.events({
@@ -71,6 +86,4 @@ Template.Edit_Page.events({
     console.log(id);
   },
 });
-
-
 
