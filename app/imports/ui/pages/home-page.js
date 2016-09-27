@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
+import { StudentData } from '../../api/studentdata/studentdata.js';
 
 /* eslint-disable no-param-reassign */
 
@@ -29,22 +30,24 @@ Template.Home_Page.onRendered(function enableSemantic() {
   // Enable radio buttons (single selection)  (Level)
   this.$('.ui.radio.checkbox').checkbox();
 
-  setDefaultFormFieldValues(this);
+  // setDefaultFormFieldValues(this);
 });
 
 
 Template.Home_Page.events({
   'submit .student-data-form'(event) {
     event.preventDefault();
-    // Text field (name
+    // Get name (text field)
     const name = event.target.name.value;
-    // Text area (bio)
+    // Get bio (text area).
     const bio = event.target.bio.value;
-    // List of check boxes (Hobbies)
-    const surfing = event.target.surfing.checked;
-    const running = event.target.running.checked;
-    const biking = event.target.biking.checked;
-    const paddling = event.target.paddling.checked;
+    // Get list of checked hobbies (checkboxes)
+    const hobbies = [];
+    _.each(['surfing', 'running', 'biking', 'paddling'], function setHobby(hobby) {
+      if (event.target[hobby].checked) {
+        hobbies.push(event.target[hobby].value);
+      }
+    });
     // Radio buttons (Level)
     const level = event.target.level.value;
     // Drop down list (GPA)
@@ -53,7 +56,9 @@ Template.Home_Page.events({
     const selectedMajors = _.filter(event.target.majors.selectedOptions, (option) => option.selected);
     const majors = _.map(selectedMajors, (option) => option.value);
 
-    console.log(name, bio, surfing, running, biking, paddling, level, gpa, majors);
+    console.log('insert', name, bio, hobbies, level, gpa, majors);
+    const id = StudentData.insert({ name, bio, hobbies, level, gpa, majors });
+    console.log(id);
   },
 });
 

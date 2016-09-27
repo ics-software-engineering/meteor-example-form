@@ -1,20 +1,19 @@
-<template name="Home_Page">
-
+<template name="Edit_Page">
   <div style="margin-top: 20px" class="ui container">
 
     <form class="ui form student-data-form">
-      <h4 class="ui dividing header">Student Data</h4>
+      <h4 class="ui dividing header">Edit Student Data</h4>
 
       <div class="field">
         <label>Name</label>
         <div class="field">
-          <input type="text" name="name" id="name" placeholder="Name">
+          <input type="text" name="name" id="name" placeholder="Name" value="{{ nameValue }}">
         </div>
       </div>
 
       <div class="field">
         <label>Bio</label>
-        <textarea rows="5" name="bio" id="bio" placeholder="Short biographical statement"></textarea>
+        <textarea rows="5" name="bio" id="bio" placeholder="Short biographical statement">{{ bioValue }}</textarea>
       </div>
 
       <div class="field">
@@ -22,25 +21,25 @@
         <div class="fields">
           <div class="field">
             <div class="ui checkbox">
-              <input type="checkbox" name="surfing" id="surfing" value="surfing" checked="checked">
+              <input type="checkbox" name="surfing" id="surfing" value="surfing" checked={{ hobbyChecked 'surfing' }} >
               <label>Surfing</label>
             </div>
           </div>
           <div class="field">
             <div class="ui checkbox">
-              <input type="checkbox" name="running" value="running" id="running" >
+              <input type="checkbox" name="running" value="running" id="running"  checked={{ hobbyChecked 'running' }} >
               <label>Running</label>
             </div>
           </div>
           <div class="field">
             <div class="ui checkbox">
-              <input type="checkbox" name="biking" value="biking" id="biking" >
+              <input type="checkbox" name="biking" value="biking" id="biking" checked={{ hobbyChecked 'biking' }} >
               <label>Biking</label>
             </div>
           </div>
           <div class="field">
             <div class="ui checkbox">
-              <input type="checkbox" name="paddling" value="paddling" id="paddling">
+              <input type="checkbox" name="paddling" value="paddling" id="paddling" checked={{ hobbyChecked 'paddling' }} >
               <label>Paddling</label>
             </div>
           </div>
@@ -52,25 +51,25 @@
         <div class="fields">
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" name="level" value="freshman" id="freshman" >
+              <input type="radio" name="level" value="freshman" id="freshman" checked={{ levelChecked 'freshman' }} >
               <label>Freshman</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" name="level" value="sophomore" id="sophomore" checked="checked">
+              <input type="radio" name="level" value="sophomore" id="sophomore" checked={{ levelChecked 'sophomore' }} >
               <label>Sophomore</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" name="level" value="junior" id="junior">
+              <input type="radio" name="level" value="junior" id="junior" checked={{ levelChecked 'junior' }} >
               <label>Junior</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" name="level" value="senior" id="senior">
+              <input type="radio" name="level" value="senior" id="senior" checked={{ levelChecked 'senior' }} >
               <label>Senior</label>
             </div>
           </div>
@@ -96,10 +95,10 @@
         <label>Majors</label>
         <select multiple="" class="ui dropdown" name="majors">
           <option value="">Select Major(s)</option>
-          <option value="physics" selected="selected">Physics</option>
-          <option value="math" selected="selected">Math</option>
-          <option value="biology">Biology</option>
-          <option value="computerscience">Computer Science</option>
+          <option value="physics" selected={{ majorSelected 'physics' }}>Physics</option>
+          <option value="math" selected={{ majorSelected 'math' }}>Math</option>
+          <option value="biology" selected={{ majorSelected 'biology' }}>Biology</option>
+          <option value="computerscience" selected={{ majorSelected 'computerscience' }}>Computer Science</option>
         </select>
       </div>
 
