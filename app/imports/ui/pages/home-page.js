@@ -1,36 +1,29 @@
 import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
 import { StudentData } from '../../api/studentdata/studentdata.js';
 
 /* eslint-disable no-param-reassign */
 
-function setDefaultFormFieldValues(instance) {
-  // Name
-  instance.$('#name')[0].value = 'John Deere';
-  // Bio
-  instance.$('#bio')[0].value = 'My bio statement';
-  // Hobbies
-  instance.$('#running')[0].checked = true;
-  // Level
-  instance.$('#senior')[0].checked = true;
-  // GPA
-  instance.$('.ui.selection.dropdown').dropdown('set selected', 3);
-  // Majors
-  // instance.$('#gpa')[0].checked = true;
-}
+const showCreatedMessage = 'showCreatedMessage';
+
+Template.Edit_Page.onCreated(function onCreated() {
+  this.autorun(() => {
+    this.subscribe('StudentData');
+  });
+  this.dict = new ReactiveDict();
+});
 
 // Put in the Semantic UI form widget initializations here.
 Template.Home_Page.onRendered(function enableSemantic() {
   // Enable the single selection dropdown menu widget. (GPA)
-  this.$('.ui.selection.dropdown').dropdown();
+  // this.$('.ui.selection.dropdown').dropdown();
   // Enable the multiple selection dropdown widget. (Majors)
   this.$('select.ui.dropdown').dropdown();
   // Enable checkboxes (multiple selection)  (Hobbies)
-  this.$('.ui.checkbox').checkbox();
+  // this.$('.ui.checkbox').checkbox();
   // Enable radio buttons (single selection)  (Level)
-  this.$('.ui.radio.checkbox').checkbox();
-
-  // setDefaultFormFieldValues(this);
+  // this.$('.ui.radio.checkbox').checkbox();
 });
 
 

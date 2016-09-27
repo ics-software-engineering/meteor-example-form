@@ -1,8 +1,9 @@
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Template } from 'meteor/templating';
-import { StudentData } from '../../api/studentdata/studentdata.js';
 import { _ } from 'meteor/underscore';
-import { Tracker } from 'meteor/tracker';
+import { StudentData } from '../../api/studentdata/studentdata.js';
 
 /* eslint-disable object-shorthand, no-unused-vars */
 
@@ -31,13 +32,13 @@ Template.Edit_Page.helpers({
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
     return _.contains(studentData.majors, major) && true;
   },
-
 });
 
 Template.Edit_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('StudentData');
   });
+  this.dict = new ReactiveDict();
 });
 
 Template.Edit_Page.onRendered(function enableSemantic() {
@@ -46,14 +47,8 @@ Template.Edit_Page.onRendered(function enableSemantic() {
     // Wait for the data to load using the callback
     Tracker.afterFlush(() => {
       // Use Tracker.afterFlush to wait for the UI to re-render
-      // Enable the single selection dropdown menu widget. (GPA)
-      template.$('.ui.selection.dropdown').dropdown();
-      // Enable the multiple selection dropdown widget. (Majors)
+      // Special case: Enable the multiple selection dropdown widget. (Majors)
       template.$('select.ui.dropdown').dropdown();
-      // Enable checkboxes (multiple selection)  (Hobbies)
-      template.$('.ui.checkbox').checkbox();
-      // Enable radio buttons (single selection)  (Level)
-      template.$('.ui.radio.checkbox').checkbox();
     });
   });
 });
@@ -81,7 +76,7 @@ Template.Edit_Page.events({
     const majors = _.map(selectedMajors, (option) => option.value);
 
     console.log('update', name, bio, hobbies, level, gpa, majors);
-    const id = StudentData.update(FlowRouter.getParam('_id'), { name, bio, hobbies, level, gpa, majors });
+    const id = StudentData.update(FlowRouter.getParam('_id'), { $set: { name, bio, hobbies, level, gpa, majors } });
     console.log(id);
   },
 });
