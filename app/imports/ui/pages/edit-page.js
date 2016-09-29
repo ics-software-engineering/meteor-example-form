@@ -48,7 +48,14 @@ Template.Edit_Page.onRendered(function enableSemantic() {
     Tracker.afterFlush(() => {
       // Use Tracker.afterFlush to wait for the UI to re-render
       // Special case: Enable the multiple selection dropdown widget. (Majors)
-      template.$('select.ui.dropdown').dropdown();
+      // template.$('select.ui.dropdown').dropdown();
+      // template.$('.ui.selection.dropdown').dropdown();
+      // template.$('select.ui.dropdown').dropdown();
+      // template.$('.ui.checkbox').checkbox();
+      // template.$('.ui.radio.checkbox').checkbox();
+      template.$('select.dropdown').dropdown();
+      template.$('.ui.checkbox').checkbox();
+      template.$('.ui.radio.checkbox').checkbox();
     });
   });
 });

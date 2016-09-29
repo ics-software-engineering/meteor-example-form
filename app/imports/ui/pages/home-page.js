@@ -1,29 +1,38 @@
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
-import { StudentData } from '../../api/studentdata/studentdata.js';
+import { ValidationError } from 'meteor/mdg:validation-error';
+import { StudentData, StudentDataSchema } from '../../api/studentdata/studentdata.js';
 
 /* eslint-disable no-param-reassign */
 
-const showCreatedMessage = 'showCreatedMessage';
+const displaySuccessMessage = 'displaySuccessMessage';
 
-Template.Edit_Page.onCreated(function onCreated() {
-  this.autorun(() => {
-    this.subscribe('StudentData');
-  });
-  this.dict = new ReactiveDict();
+
+Template.Home_Page.onCreated(function onCreated() {
+  this.messageFlags = new ReactiveDict();
 });
 
-// Put in the Semantic UI form widget initializations here.
+Template.Home_Page.helpers({
+  displaySuccessMessage() {
+    const instance = Template.instance();
+    console.log('in helper displaySuccessMessage', displaySuccessMessage);
+    return instance.messageFlags.get(displaySuccessMessage);
+  },
+  successClass() {
+    const instance = Template.instance();
+    console.log('in helper successClass', displaySuccessMessage);
+    return instance.messageFlags.get(displaySuccessMessage) ? 'success' : '';
+  },
+});
+
 Template.Home_Page.onRendered(function enableSemantic() {
-  // Enable the single selection dropdown menu widget. (GPA)
-  // this.$('.ui.selection.dropdown').dropdown();
-  // Enable the multiple selection dropdown widget. (Majors)
-  this.$('select.ui.dropdown').dropdown();
-  // Enable checkboxes (multiple selection)  (Hobbies)
-  // this.$('.ui.checkbox').checkbox();
-  // Enable radio buttons (single selection)  (Level)
-  // this.$('.ui.radio.checkbox').checkbox();
+  const instance = this;
+  instance.$('select.ui.dropdown').dropdown();
+  instance.$('.ui.selection.dropdown').dropdown();
+  instance.$('select.dropdown').dropdown();
+  instance.$('.ui.checkbox').checkbox();
+  instance.$('.ui.radio.checkbox').checkbox();
 });
 
 
@@ -34,24 +43,33 @@ Template.Home_Page.events({
     const name = event.target.name.value;
     // Get bio (text area).
     const bio = event.target.bio.value;
-    // Get list of checked hobbies (checkboxes)
+    // Get hobbies (checkboxes, zero to many)
     const hobbies = [];
     _.each(['surfing', 'running', 'biking', 'paddling'], function setHobby(hobby) {
       if (event.target[hobby].checked) {
         hobbies.push(event.target[hobby].value);
       }
     });
-    // Radio buttons (Level)
+    // Get level (radio buttons, exactly one)
     const level = event.target.level.value;
-    // Drop down list (GPA)
+    // Get GPA (single selection)
     const gpa = event.target.gpa.value;
-    // Multiple select list  (Majors)
+    // Get Majors (multiple selection)
     const selectedMajors = _.filter(event.target.majors.selectedOptions, (option) => option.selected);
     const majors = _.map(selectedMajors, (option) => option.value);
 
-    console.log('insert', name, bio, hobbies, level, gpa, majors);
-    const id = StudentData.insert({ name, bio, hobbies, level, gpa, majors });
-    console.log(id);
+    const newStudentData = { name, bio, hobbies, level, gpa, majors };
+    try {
+      console.log('about to validate', newStudentData);
+      // const result = StudentDataSchema.validate(newStudentData);
+      const result = StudentData.simpleSchema().namedContext().validate(newStudentData, { modifier: false });
+      console.log('after validation', result);
+      const id = StudentData.insert(newStudentData);
+      console.log('in event submit', displaySuccessMessage, id);
+      Template.instance().messageFlags.set(displaySuccessMessage, id);
+    } catch (err) {
+      console.log('validation not ok', err);
+    }
   },
 });
 
