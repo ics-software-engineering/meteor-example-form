@@ -4,6 +4,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 /* eslint-disable object-shorthand */
 
 export const StudentData = new Mongo.Collection('StudentData');
+
 SimpleSchema.debug = true;
 
 /**
@@ -18,6 +19,8 @@ export const StudentDataSchema = new SimpleSchema({
   bio: {
     label: 'Bio',
     type: String,
+    optional: true,
+    defaultValue: '',
     max: 500,
   },
   hobbies: {

@@ -2,7 +2,7 @@
 
   <div style="margin-top: 20px" class="ui container">
 
-    <form class="ui form student-data-form  {{ successClass }}">
+    <form class="ui form student-data-form  {{ successClass }} {{ errorClass }}">
       <h4 class="ui dividing header">Student Data</h4>
 
       <div class="required field">
@@ -10,9 +10,15 @@
         <div class="field">
           <input type="text" name="name" id="name" placeholder="Name">
         </div>
+        {{#if displayNameFieldError}}
+        <div class="ui error message">
+          <p>You must specify your name.</p>
+        </div>
+        {{/if}}
       </div>
 
-      <div class="required field">
+
+      <div class="field">
         <label>Bio</label>
         <textarea rows="5" name="bio" id="bio" placeholder="Short biographical statement"></textarea>
       </div>
@@ -75,6 +81,11 @@
             </div>
           </div>
         </div>
+        {{#if displayLevelFieldError}}
+        <div class="ui error message">
+          <p>You must specify your level.</p>
+        </div>
+        {{/if}}
       </div>
 
       <div class="required field">
@@ -86,6 +97,11 @@
           <option value="2">2.0-2.9</option>
           <option value="1">1.0-1.9</option>
         </select>
+        {{#if displayGpaFieldError}}
+        <div class="ui error message">
+          <p>You must specify your GPA.</p>
+        </div>
+        {{/if}}
       </div>
 
       <div class="field">
