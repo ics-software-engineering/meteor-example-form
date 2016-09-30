@@ -102,19 +102,19 @@ In the HTML code, [edit-student-data-page#L3](https://github.com/ics-software-en
 
 The other significant difference on this page is the invocation of helper functions to provide values for all of the form values. 
 
-Moving to the Javascript code, [edit-student-data-page#L14-L16](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L14-L16) shows how to set up the subscription to the StudentData collection. In reality, this page does not need the entire StudentData collection, only the specific document referenced in the URL, so a more efficient solution would be a subscription that only retrieves a single document. But this approach was chosen as the simplest one since the focus is on form processing.
+Moving to the Javascript code, [edit-student-data-page#L14-L16](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L14-L16) shows how to set up the subscription to the StudentData collection. In reality, this page does not need the entire StudentData collection, only the specific document referenced in the URL, so a more efficient solution would be a subscription that only retrieves a single document. But this approach was chosen as the simplest one since the focus is on form processing.
 
-[edit-student-data-page#L24-L70](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L24-L70) show the helper functions. Several of these refer to the URL to determine the id of the StudentData document of interest, then return a value appropriate to setting a form field value.  The remainder replicate the validation handlers from the Create Student Data page.
+[edit-student-data-page#L24-L70](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L24-L70) show the helper functions. Several of these refer to the URL to determine the id of the StudentData document of interest, then return a value appropriate to setting a form field value.  The remainder replicate the validation handlers from the Create Student Data page.
 
-[edit-student-data-page#L72-L85](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L72-L85) shows that in the case of this page where we have subscriptions, the Semantic UI Javascript initialization code must be in a Tracker.afterFlush callback which is itself in an onRendered callback. Wow.
+[edit-student-data-page#L72-L85](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L72-L85) shows that in the case of this page where we have subscriptions, the Semantic UI Javascript initialization code must be in a Tracker.afterFlush callback which is itself in an onRendered callback. Wow.
 
-Finally, the submit event handler is identical to the one in the Create Student Data page except for [edit-student-data-page#L119](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L119) which calls update rather than insert.
+Finally, the submit event handler is identical to the one in the Create Student Data page except for [edit-student-data-page#L119](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L119) which calls update rather than insert.
 
 ## Screencast
 
-Click the image below to watch a 27 minute walkthrough of this system.
+Click the image below to watch a 19 minute walkthrough of this system.
 
-[<img src="https://raw.githubusercontent.com/ics-software-engineering/meteor-application-template/master/doc/meteor-application-template-youtube.png" width="600">](https://www.youtube.com/watch?v=kEJN3kjyugs)
+[<img src="https://raw.githubusercontent.com/ics-software-engineering/meteor-application-template/master/doc/meteor-application-template-youtube.png" width="600">](https://www.youtube.com/watch?v=cEoPDdY-iW4)
 
 
 ## Miscellaneous issues
