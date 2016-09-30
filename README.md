@@ -34,8 +34,16 @@ A successful update is indicated like this:
 
 ![](https://github.com/ics-software-engineering/meteor-example-form/raw/master/doc/update-student-data-page-success.png)
 
-
 I won't show it here, but if you violate any validation on this update page, then it will show the same error messages as on the Create Student Data page.
+
+## Code walkthrough
+
+#### Mongo collection schema
+
+User input should always be validated before being further processed by the system.  The canonical approach to validation in Meteor is to create a schema using Simple Schema. In this sample application, the schema is defined as part of defining the [StudentData Collection](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/api/studentdata/studentdata.js).
+
+
+
 
 
 
