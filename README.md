@@ -14,6 +14,15 @@ To best understand this application, it is useful to first familiarize yourself 
 
 * [Reactive Dict, Reactive Vars, and Session Variables](https://themeteorchef.com/snippets/reactive-dict-reactive-vars-and-session-variables/).  This application uses Reactive Dictionaries. I found this blog posting to be a very concise and useful explanation of them and how they relate to other mechanisms like Session variables.
 
+## Preinstalled packages
+
+This application requires two additional packages beyond the base packages and those already added for meteor-application-template:
+
+```
+aldeed:collection2             2.10.0  Automatic validation of insert and update operations on the client and server.
+reactive-dict                  1.1.8  Reactive dictionary
+```
+
 ## UI Walkthrough
 
 The home page of this application presents the Create Student Data page:
