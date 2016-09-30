@@ -76,7 +76,45 @@ Now let's turn to the Javascript side of Create Student Data.
 
 [create-student-data-page.js#L11-L16](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L11-L16) shows the onCreated handler.  This handler sets up a Reactive Dictionary to hold displaySuccessMessage, indicating if we want to display the success message, and displayErrorMessages, indicating if we want to display one or more error messages. Note that they are initialized to false, indicating that we are in the third state (neither success nor failure).
 
-[create-student-data-page.js#L18-L40](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L18-L40) shows the helper functions for this page. 
+[create-student-data-page.js#L18-L40](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L18-L40) shows the helper functions for this page. They alter the appearance of the page through reactive variables (either through the messageFlags reactive dict or through the reactive variables created by the Simple Schema validation mechanism).
+
+[create-student-data-page.js#L42-L49](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L42-L49) shows the onRendered callback function which is responsible for loading the Semantic UI javascript to make the form elements look good. Because there are no subscriptions on this page, the code is straightforward (in constrast to the code required for the Edit Student Data page).
+
+
+[create-student-data-page.js#L51-L89](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L51-L89)  shows the events callback for handling the submit button event. As is usual in Meteor event processing, the first thing is to disable the default event handling. The following code provides examples of how to extract form values from the various input types: text fields, text areas, checkboxes, radio buttons, single selection, and multiple selection.  After this, the handler creates an object called newStudentData that gathers together these values.  
+
+This object is "cleaned" manually in order to make it correspond to the same object that will be checked by the Collection2 hook function as part of the insert process. Finally, we validate the form data and set the reactive variables appropriately.  Note that changing the reactive variable values is all that is needed to cause the page contents to be updated.  
+
+#### Edit Student Data
+
+The Edit Student Data HTML and Javascript has a lot of duplicated code.  This is intentional for pedagogical reasons: I think it is easier to figure out how form processing works when the code for creation and updating are shown in isolation. That said, when you create your own production code, you will probably want to refactor out a "component" to eliminate redundancy.
+
+In the HTML code, [edit-student-data-page#L3](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L3) shows the first difference: the use of the Template.subscriptionsReady to delay the display of the page until the data is available. 
+
+The other significant difference on this page is the invocation of helper functions to provide values for all of the form values. 
+
+Moving to the Javascript code, [edit-student-data-page#L14-L16](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L14-L16) shows how to set up the subscription to the StudentData collection. In reality, this page does not need the entire StudentData collection, only the specific document referenced in the URL, so a more efficient solution would be a subscription that only retrieves a single document. But this approach was chosen as the simplest one since the focus is on form processing.
+
+[edit-student-data-page#L24-L70](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L24-L70) show the helper functions. Several of these refer to the URL to determine the id of the StudentData document of interest, then return a value appropriate to setting a form field value.  The remainder replicate the validation handlers from the Create Student Data page.
+
+[edit-student-data-page#L72-L85](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L72-L85) shows that in the case of this page where we have subscriptions, the Semantic UI Javascript initialization code must be in a Tracker.afterFlush callback which is itself in an onRendered callback. Wow.
+
+Finally, the submit event handler is identical to the one in the Create Student Data page except for [edit-student-data-page#L119](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L119) which calls update rather than insert.
+
+## Screencast
+
+Click the image below to watch a 27 minute walkthrough of this system.
+
+[<img src="https://raw.githubusercontent.com/ics-software-engineering/meteor-application-template/master/doc/meteor-application-template-youtube.png" width="600">](https://www.youtube.com/watch?v=kEJN3kjyugs)
+
+
+## Miscellaneous issues
+
+This sample application includes the insecure package.  In production settings, you will need to create Meteor methods and invoke them in the submit event handlers rather than calling the insert and update operations directly.  
+
+This code represents my best understanding of form processing for Meteor 1.4 and Semantic UI, but there may be better ways to do it. Please contact me (or issue a pull request) with your suggestions; they are appreciated.
+
+
 
 
 
