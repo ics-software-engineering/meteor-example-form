@@ -8,14 +8,14 @@ import { StudentData, StudentDataSchema } from '../../api/studentdata/studentdat
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 
-Template.Home_Page.onCreated(function onCreated() {
+Template.Create_Student_Data_Page.onCreated(function onCreated() {
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = StudentDataSchema.namedContext('Create_StudentData_Page');
 });
 
-Template.Home_Page.helpers({
+Template.Create_Student_Data_Page.helpers({
   successClass() {
     return Template.instance().messageFlags.get(displaySuccessMessage) ? 'success' : '';
   },
@@ -39,7 +39,7 @@ Template.Home_Page.helpers({
   },
 });
 
-Template.Home_Page.onRendered(function enableSemantic() {
+Template.Create_Student_Data_Page.onRendered(function enableSemantic() {
   const instance = this;
   instance.$('select.ui.dropdown').dropdown();
   instance.$('.ui.selection.dropdown').dropdown();
@@ -48,7 +48,7 @@ Template.Home_Page.onRendered(function enableSemantic() {
   instance.$('.ui.radio.checkbox').checkbox();
 });
 
-Template.Home_Page.events({
+Template.Create_Student_Data_Page.events({
   'submit .student-data-form'(event, instance) {
     event.preventDefault();
     // Get name (text field)
@@ -77,9 +77,14 @@ Template.Home_Page.events({
     StudentDataSchema.clean(newStudentData);
     // Determine validity.
     instance.context.validate(newStudentData);
-    // Indicate either success or indicate errors in form data.
-    instance.messageFlags.set(displaySuccessMessage, instance.context.isValid());
-    instance.messageFlags.set(displayErrorMessages, !instance.context.isValid());
+    if (instance.context.isValid()) {
+      const id = StudentData.insert(newStudentData);
+      instance.messageFlags.set(displaySuccessMessage, id);
+      instance.messageFlags.set(displayErrorMessages, false);
+    } else {
+      instance.messageFlags.set(displaySuccessMessage, false);
+      instance.messageFlags.set(displayErrorMessages, true);
+    }
   },
 });
 

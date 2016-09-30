@@ -1,16 +1,21 @@
-<template name="Edit_Page">
+<template name="Edit_Student_Data_Page">
 
   {{#if Template.subscriptionsReady}}
   <div style="margin-top: 20px" class="ui container">
 
-    <form class="ui form student-data-form">
+    <form class="ui form student-data-form {{ successClass }} {{ errorClass }}">
       <h4 class="ui dividing header">Edit Student Data</h4>
 
-      <div class="field">
+      <div class="required field">
         <label>Name</label>
         <div class="field">
           <input type="text" name="name" id="name" placeholder="Name" value="{{ nameValue }}">
         </div>
+        {{#if displayNameFieldError}}
+        <div class="ui error message">
+          <p>You must specify your name.</p>
+        </div>
+        {{/if}}
       </div>
 
       <div class="field">
@@ -48,7 +53,7 @@
         </div>
       </div>
 
-      <div class="field">
+      <div class="required field">
         <label>Level</label>
         <div class="fields">
           <div class="field">
@@ -76,6 +81,11 @@
             </div>
           </div>
         </div>
+        {{#if displayLevelFieldError}}
+        <div class="ui error message">
+          <p>You must specify your level.</p>
+        </div>
+        {{/if}}
       </div>
 
       <div class="field">
@@ -87,6 +97,11 @@
           <option value="2" selected={{ gpaSelected '2' }}>2.0-2.9</option>
           <option value="1" selected={{ gpaSelected '1' }}>1.0-1.9</option>
         </select>
+        {{#if displayGpaFieldError}}
+        <div class="ui error message">
+          <p>You must specify your GPA.</p>
+        </div>
+        {{/if}}
       </div>
 
       <div class="field">
@@ -100,8 +115,12 @@
         </select>
       </div>
 
-
       <button class="ui primary button" type="submit">Update</button>
+      {{#if displaySuccessMessage}}
+      <div class="ui success message">
+        <p>Student data successfully updated.</p>
+      </div>
+      {{/if}}
     </form>
 
 

@@ -5,8 +5,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const StudentData = new Mongo.Collection('StudentData');
 
-SimpleSchema.debug = true;
-
 /**
  * Create the schema for StudentData
  */
@@ -40,6 +38,5 @@ export const StudentDataSchema = new SimpleSchema({
     type: [String],
   },
 });
-
 
 StudentData.attachSchema(StudentDataSchema);

@@ -1,4 +1,4 @@
-<template name="Home_Page">
+<template name="Create_Student_Data_Page">
 
   <div style="margin-top: 20px" class="ui container">
 
@@ -120,7 +120,7 @@
 
       {{#if displaySuccessMessage}}
       <div class="ui success message">
-        <p>To update this entry, go <a href="/studentdata/{{ displayCreatedMessage }}">here</a></p>
+        <p>To update this entry, go to  <a href="/studentdata/{{ displaySuccessMessage }}">/studentdata/{{ displaySuccessMessage }}</a></p>
       </div>
       {{/if}}
     </form>

@@ -1,5 +1,5 @@
-import './edit-page.html';
-import './edit-page.js';
+import './edit-student-data-page.html';
+import './edit-student-data-page.js';
 
-import './home-page.html';
-import './home-page.js';
+import './create-student-data-page.html';
+import './create-student-data-page.js';
