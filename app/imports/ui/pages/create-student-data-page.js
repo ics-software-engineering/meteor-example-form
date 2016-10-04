@@ -25,17 +25,9 @@ Template.Create_Student_Data_Page.helpers({
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';
   },
-  displayNameFieldError() {
+  displayFieldError(fieldName) {
     const errorKeys = Template.instance().context.invalidKeys();
-    return _.find(errorKeys, (keyObj) => keyObj.name === 'name');
-  },
-  displayLevelFieldError() {
-    const errorKeys = Template.instance().context.invalidKeys();
-    return _.find(errorKeys, (keyObj) => keyObj.name === 'level');
-  },
-  displayGpaFieldError() {
-    const errorKeys = Template.instance().context.invalidKeys();
-    return _.find(errorKeys, (keyObj) => keyObj.name === 'gpa');
+    return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
   },
 });
 

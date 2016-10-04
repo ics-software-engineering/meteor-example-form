@@ -10,7 +10,7 @@
         <div class="field">
           <input type="text" name="name" id="name" placeholder="Name">
         </div>
-        {{#if displayNameFieldError}}
+        {{#if displayFieldError 'name' }}
         <div class="ui error message">
           <p>You must specify your name.</p>
         </div>
@@ -81,7 +81,7 @@
             </div>
           </div>
         </div>
-        {{#if displayLevelFieldError}}
+        {{#if displayFieldError 'level' }}
         <div class="ui error message">
           <p>You must specify your level.</p>
         </div>
@@ -97,7 +97,7 @@
           <option value="2">2.0-2.9</option>
           <option value="1">1.0-1.9</option>
         </select>
-        {{#if displayGpaFieldError}}
+        {{#if displayFieldError 'gpa' }}
         <div class="ui error message">
           <p>You must specify your GPA.</p>
         </div>

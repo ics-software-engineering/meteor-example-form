@@ -9,9 +9,9 @@
       <div class="required field">
         <label>Name</label>
         <div class="field">
-          <input type="text" name="name" id="name" placeholder="Name" value="{{ nameValue }}">
+          <input type="text" name="name" id="name" placeholder="Name" value="{{ studentDataField 'name' }}">
         </div>
-        {{#if displayNameFieldError}}
+        {{#if displayFieldError 'name' }}
         <div class="ui error message">
           <p>You must specify your name.</p>
         </div>
@@ -20,7 +20,7 @@
 
       <div class="field">
         <label>Bio</label>
-        <textarea rows="5" name="bio" id="bio" placeholder="Short biographical statement">{{ bioValue }}</textarea>
+        <textarea rows="5" name="bio" id="bio" placeholder="Short biographical statement">{{ studentDataField 'bio' }}</textarea>
       </div>
 
       <div class="field">
@@ -81,7 +81,7 @@
             </div>
           </div>
         </div>
-        {{#if displayLevelFieldError}}
+        {{#if displayFieldError 'level' }}
         <div class="ui error message">
           <p>You must specify your level.</p>
         </div>
@@ -97,7 +97,7 @@
           <option value="2" selected={{ gpaSelected '2' }}>2.0-2.9</option>
           <option value="1" selected={{ gpaSelected '1' }}>1.0-1.9</option>
         </select>
-        {{#if displayGpaFieldError}}
+        {{#if displayFieldError 'gpa' }}
         <div class="ui error message">
           <p>You must specify your GPA.</p>
         </div>

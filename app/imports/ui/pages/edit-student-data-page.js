@@ -22,13 +22,10 @@ Template.Edit_Student_Data_Page.onCreated(function onCreated() {
 
 
 Template.Edit_Student_Data_Page.helpers({
-  nameValue() {
+  studentDataField(fieldName) {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return studentData.name;
-  },
-  bioValue() {
-    const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return studentData.bio;
+    // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
+    return studentData && studentData[fieldName];
   },
   hobbyChecked(hobby) {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
@@ -55,17 +52,9 @@ Template.Edit_Student_Data_Page.helpers({
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';
   },
-  displayNameFieldError() {
+  displayFieldError(fieldName) {
     const errorKeys = Template.instance().context.invalidKeys();
-    return _.find(errorKeys, (keyObj) => keyObj.name === 'name');
-  },
-  displayLevelFieldError() {
-    const errorKeys = Template.instance().context.invalidKeys();
-    return _.find(errorKeys, (keyObj) => keyObj.name === 'level');
-  },
-  displayGpaFieldError() {
-    const errorKeys = Template.instance().context.invalidKeys();
-    return _.find(errorKeys, (keyObj) => keyObj.name === 'gpa');
+    return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
   },
 });
 
