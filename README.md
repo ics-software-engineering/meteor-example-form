@@ -114,7 +114,7 @@ Finally, the submit event handler is just like the one in Create Student Data, e
 
 Click the image below to watch a 19 minute walkthrough of this system.
 
-[<img src="https://github.com/ics-software-engineering/meteor-example-form/raw/master/doc/meteor-example-form-youtube.png" width="600">](https://www.youtube.com/watch?v=cEoPDdY-iW4)
+[<img src="https://github.com/ics-software-engineering/meteor-example-form/raw/master/doc/meteor-example-form-youtube.png" width="600">](https://www.youtube.com/watch?v=22nbaQwtS3U)
 
 
 ## Miscellaneous issues
