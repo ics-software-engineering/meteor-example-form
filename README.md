@@ -100,7 +100,7 @@ The Edit Student Data HTML and Javascript duplicates some of the code from Creat
 
 In the HTML code, [edit-student-data-page#L3](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L3) shows the first difference: the use of the Template.subscriptionsReady to delay the display of the page until the data is available. 
 
-The other significant difference on this page is the invocation of helper functions to provide values for all of the form values. 
+The other significant difference on this page is the invocation of helper functions to provide values for all of the form values as shown on [edit-student-data-page#L25-L45](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L25-L45). Note that these helper functions implement the [Meteor "guard" design pattern](https://dweldon.silvrback.com/guards) to prevent fields from being accessed when the associated object is not available.
 
 Moving to the Javascript code, [edit-student-data-page#L14-L16](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L14-L16) shows how to set up the subscription to the StudentData collection. In reality, this page does not need the entire StudentData collection, only the specific document referenced in the URL, so a more efficient solution would be a subscription that only retrieves a single document. But this approach was chosen as the simplest one since the focus is on form processing.
 
