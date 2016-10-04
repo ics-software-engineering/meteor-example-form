@@ -106,9 +106,9 @@ Moving to the Javascript code, [edit-student-data-page#L14-L16](https://github.c
 
 [edit-student-data-page#L25-L45](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L25-L45) shows the implementation of the helper functions to provide values into the form. Note that these helper functions implement the [Meteor "guard" design pattern](https://dweldon.silvrback.com/guards) to prevent fields from being accessed when the associated object is not available.
 
-[edit-student-data-page#L72-L85](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L72-L85) shows that in the case of this page where we have subscriptions, the Semantic UI Javascript initialization code must be in a Tracker.afterFlush callback which is itself in an onRendered callback. Wow.
+[edit-student-data-page#L65-L72](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L65-L72) shows that in the case of this page where we have subscriptions, the Semantic UI Javascript initialization code must be in a Tracker.afterFlush callback which is itself in an onRendered callback. Wow.
 
-Finally, the submit event handler is identical to the one in the Create Student Data page except for [edit-student-data-page#L119](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L119) which calls update rather than insert.
+Finally, the submit event handler is just like the one in Create Student Data, except for [Line 108](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L108) which calls update rather than insert.
 
 ## Screencast
 
