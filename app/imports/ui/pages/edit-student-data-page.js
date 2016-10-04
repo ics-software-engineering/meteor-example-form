@@ -29,19 +29,19 @@ Template.Edit_Student_Data_Page.helpers({
   },
   hobbyChecked(hobby) {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return _.contains(studentData.hobbies, hobby) && true;
+    return studentData && _.contains(studentData.hobbies, hobby) && true;
   },
   levelChecked(level) {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return (studentData.level === level) && true;
+    return studentData && (studentData.level === level) && true;
   },
   gpaSelected(gpa) {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return (studentData.gpa === gpa) && true;
+    return studentData && (studentData.gpa === gpa) && true;
   },
   majorSelected(major) {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return _.contains(studentData.majors, major) && true;
+    return studentData && _.contains(studentData.majors, major) && true;
   },
   successClass() {
     return Template.instance().messageFlags.get(displaySuccessMessage) ? 'success' : '';
