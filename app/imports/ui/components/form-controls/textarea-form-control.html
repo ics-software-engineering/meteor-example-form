@@ -1,0 +1,9 @@
+<template name="TextArea_Form_Control">
+  {{! label, id, and placeholder fields default to supplied name field. }}
+  {{! rows field defaults to 5 }}
+  <div class="{{#if required}}required{{/if}} field">
+    <label>{{#if label}}{{label}}{{else}}{{name}}{{/if}}</label>
+    <textarea rows="{{#if rows}}{{rows}}{{else}}5{{/if}}" name="{{name}}" id="{{#if id}}{{id}}{{else}}{{name}}{{/if}}" placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{name}}{{/if}}"></textarea>
+  </div>
+  {{> Form_Error_Message errorMessage=errorMessage}}
+</template>

@@ -5,23 +5,8 @@
     <form class="ui form student-data-form  {{ successClass }} {{ errorClass }}">
       <h4 class="ui dividing header">Student Data</h4>
 
-      <div class="required field">
-        <label>Name</label>
-        <div class="field">
-          <input type="text" name="name" id="name" placeholder="Name">
-        </div>
-        {{#if displayFieldError 'name' }}
-        <div class="ui error message">
-          <p>You must specify your name.</p>
-        </div>
-        {{/if}}
-      </div>
-
-
-      <div class="field">
-        <label>Bio</label>
-        <textarea rows="5" name="bio" id="bio" placeholder="Short biographical statement"></textarea>
-      </div>
+      {{> Text_Form_Control name="Name" errorMessage=(fieldError "name")}}
+      {{> TextArea_Form_Control name="Bio" placeholder="Short bio statement here" errorMessage=(fieldError "bio")}}
 
       <div class="field">
         <label>Hobbies</label>
@@ -81,7 +66,7 @@
             </div>
           </div>
         </div>
-        {{#if displayFieldError 'level' }}
+        {{#if fieldError 'level' }}
         <div class="ui error message">
           <p>You must specify your level.</p>
         </div>
@@ -97,7 +82,7 @@
           <option value="2">2.0-2.9</option>
           <option value="1">1.0-1.9</option>
         </select>
-        {{#if displayFieldError 'gpa' }}
+        {{#if fieldError 'gpa' }}
         <div class="ui error message">
           <p>You must specify your GPA.</p>
         </div>
