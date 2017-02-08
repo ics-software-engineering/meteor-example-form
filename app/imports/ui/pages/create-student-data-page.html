@@ -5,45 +5,10 @@
     <form class="ui form student-data-form  {{ successClass }} {{ errorClass }}">
       <h4 class="ui dividing header">Student Data</h4>
 
-      {{> Text_Form_Control name="Name" errorMessage=(fieldError "name")}}
-      {{> TextArea_Form_Control name="Bio" placeholder="Short bio statement here" errorMessage=(fieldError "bio")}}
+      {{> Text_Form_Control label="Name" required=true errorMessage=(fieldError "Name")}}
+      {{> TextArea_Form_Control label="Bio" placeholder="Short bio statement here" errorMessage=(fieldError "Bio")}}
       {{> Checkbox_Form_Control label="Hobbies" checkboxes=checkboxes }}
-
-
-      <div class="required field">
-        <label>Level</label>
-        <div class="fields">
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" name="level" value="freshman" id="freshman" >
-              <label>Freshman</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" name="level" value="sophomore" id="sophomore">
-              <label>Sophomore</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" name="level" value="junior" id="junior">
-              <label>Junior</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" name="level" value="senior" id="senior">
-              <label>Senior</label>
-            </div>
-          </div>
-        </div>
-        {{#if fieldError 'level' }}
-        <div class="ui error message">
-          <p>You must specify your level.</p>
-        </div>
-        {{/if}}
-      </div>
+      {{> Radio_Form_Control label="Level" name="Level" required=true radios=radios errorMessage=(fieldError "Level") }}
 
       <div class="required field">
         <label>GPA</label>

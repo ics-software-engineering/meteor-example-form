@@ -1,11 +1,14 @@
 <template name="Checkbox_Field">
   {{! parameters: label, name, id, value, checked. }}
-  {{! label, id, and value are optional and default to name. }}
+  {{! name, id, and value are optional and default to label. }}
   <div class="field">
     <div class="ui checkbox">
-      <input type="checkbox" name="{{name}}" id="{{#if id}}{{id}}{{else}}{{name}}{{/if}}"
-             value="{{#if value}}{{value}}{{else}}{{name}}{{/if}}" checked="{{checked}}">
-      <label>{{#if label}}{{label}}{{else}}{{name}}{{/if}}</label>
+      <input type="checkbox"
+             name="{{#if name}}{{name}}{{else}}{{label}}{{/if}}"
+             id="{{#if id}}{{id}}{{else}}{{label}}{{/if}}"
+             value="{{#if value}}{{value}}{{else}}{{label}}{{/if}}"
+             checked="{{checked}}">
+      <label>{{label}}</label>
     </div>
   </div>
 </template>

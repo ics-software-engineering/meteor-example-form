@@ -1,0 +1,13 @@
+<template name="Radio_Form_Control">
+  {{! parameters: label, name, radios, required, errorMessage. Label, name, radios are required. }}
+  {{! radios is an array of objects. Required fields: value, label. Optional: id, checked, required }}
+  <div class="{{#if required}}required{{/if}} field">
+    <label>{{label}}</label>
+    <div class="fields">
+      {{#each radio in radios}}
+        {{> Radio_Field name=name label=radio.label checked=radio.checked}}
+      {{/each}}
+    </div>
+    {{> Form_Error_Message errorMessage=errorMessage}}
+  </div>
+</template>

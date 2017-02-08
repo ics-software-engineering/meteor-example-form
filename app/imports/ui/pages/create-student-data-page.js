@@ -31,7 +31,10 @@ Template.Create_Student_Data_Page.helpers({
     return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
   },
   checkboxes() {
-    return [{ name: 'Surfing' }, { name: 'Running' }, { name: 'Biking' }, { name: 'Paddling' }];
+    return [{ label: 'Surfing' }, { label: 'Running' }, { label: 'Biking' }, { label: 'Paddling' }];
+  },
+  radios() {
+    return [{ label: 'Freshman' }, { label: 'Sophomore' }, { label: 'Junior' }, { label: 'Senior' }];
   },
 });
 

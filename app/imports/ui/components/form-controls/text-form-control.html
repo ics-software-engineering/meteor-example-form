@@ -1,10 +1,14 @@
 <template name="Text_Form_Control">
   {{! parameters: required, label, name, id, placeholder, value, errorMessage. }}
-  {{! label, id, and placeholder are optional and default to name.. }}
+  {{! name, id, and placeholder are optional and default to label. }}
   <div class="{{#if required}}required{{/if}} field">
-    <label>{{#if label}}{{label}}{{else}}{{name}}{{/if}}</label>
+    <label>{{label}}</label>
     <div class="field">
-      <input type="text" name="{{name}}" id="{{#if id}}{{id}}{{else}}{{name}}{{/if}}" placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{name}}{{/if}}" value="{{value}}">
+      <input type="text"
+             name="{{#if name}}{{name}}{{else}}{{label}}{{/if}}"
+             id="{{#if id}}{{id}}{{else}}{{label}}{{/if}}"
+             placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{label}}{{/if}}"
+             value="{{value}}">
     </div>
     {{> Form_Error_Message errorMessage=errorMessage}}
   </div>
