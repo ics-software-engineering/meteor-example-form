@@ -1,5 +1,6 @@
 <template name="Text_Form_Control">
-  {{! label, id, and placeholder default to name if not supplied as params. }}
+  {{! parameters: required, label, name, id, placeholder, value, errorMessage. }}
+  {{! label, id, and placeholder are optional and default to name.. }}
   <div class="{{#if required}}required{{/if}} field">
     <label>{{#if label}}{{label}}{{else}}{{name}}{{/if}}</label>
     <div class="field">

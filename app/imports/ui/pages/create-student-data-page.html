@@ -7,36 +7,8 @@
 
       {{> Text_Form_Control name="Name" errorMessage=(fieldError "name")}}
       {{> TextArea_Form_Control name="Bio" placeholder="Short bio statement here" errorMessage=(fieldError "bio")}}
+      {{> Checkbox_Form_Control label="Hobbies" checkboxes=checkboxes }}
 
-      <div class="field">
-        <label>Hobbies</label>
-        <div class="fields">
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" name="surfing" id="surfing" value="surfing">
-              <label>Surfing</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" name="running" value="running" id="running" >
-              <label>Running</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" name="biking" value="biking" id="biking" >
-              <label>Biking</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" name="paddling" value="paddling" id="paddling">
-              <label>Paddling</label>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="required field">
         <label>Level</label>

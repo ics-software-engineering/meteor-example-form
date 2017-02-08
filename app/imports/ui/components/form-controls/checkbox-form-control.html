@@ -1,0 +1,12 @@
+<template name="Checkbox_Form_Control">
+  {{! parameters: label, checkboxes }}
+  {{! checkboxes is an array of objects. Required fields: name, value, label. Optional: id, checked }}
+  <div class="field">
+    <label>{{label}}</label>
+    <div class="fields">
+      {{#each checkbox in checkboxes}}
+        {{> Checkbox_Field name=checkbox.name id=checkbox.id label=checkbox.label value=checkbox.value checked=checkbox.checked}}
+      {{/each}}
+    </div>
+  </div>
+</template>

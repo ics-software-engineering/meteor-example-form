@@ -16,9 +16,6 @@ Template.Create_Student_Data_Page.onCreated(function onCreated() {
 });
 
 Template.Create_Student_Data_Page.helpers({
-  nameFieldParams() {
-    return { name: 'Name', label: 'Name', placeholder: 'Name', required: true };
-  },
   successClass() {
     return Template.instance().messageFlags.get(displaySuccessMessage) ? 'success' : '';
   },
@@ -32,6 +29,9 @@ Template.Create_Student_Data_Page.helpers({
     const invalidKeys = Template.instance().context.invalidKeys();
     const errorObject = _.find(invalidKeys, (keyObj) => keyObj.name === fieldName);
     return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
+  },
+  checkboxes() {
+    return [{ name: 'Surfing' }, { name: 'Running' }, { name: 'Biking' }, { name: 'Paddling' }];
   },
 });
 
