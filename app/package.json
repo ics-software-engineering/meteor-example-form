@@ -2,7 +2,7 @@
   "name": "meteor-example-form",
   "private": true,
   "scripts": {
-    "start": "meteor",
+    "start": "meteor --no-release-check",
     "lint": "eslint --quiet ./imports"
   },
   "dependencies": {

@@ -6,6 +6,28 @@ This sample application illustrates how to manipulate user input using forms wit
 * Conditional display of page content using Reactive Dictionaries.
 * Inserting new documents into Mongo based upon form data, as well as retrieving and updating documents using forms.
 
+## Installation
+
+After [installing Meteor](https://www.meteor.com/install) and downloading this package, cd into the apps directory and run:
+
+```
+meteor npm install
+```
+
+Next, run the system with:
+
+```
+meteor npm run start
+```
+
+That will invoke the script in the [package.json](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/package.json) to run meteor. To speed up the process, the script disables release checking.
+
+You can also run ESLint over the source code with:
+
+```
+meteor npm run lint
+```
+
 
 ## Prerequisites
 
