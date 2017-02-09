@@ -5,38 +5,12 @@
     <form class="ui form student-data-form  {{ successClass }} {{ errorClass }}">
       <h4 class="ui dividing header">Student Data</h4>
 
-      {{> Text_Form_Control label="Name" required=true errorMessage=(fieldError "Name")}}
-      {{> TextArea_Form_Control label="Bio" placeholder="Short bio statement here" errorMessage=(fieldError "Bio")}}
-      {{> Checkbox_Form_Control label="Hobbies" checkboxes=checkboxes }}
-      {{> Radio_Form_Control label="Level" name="Level" required=true radios=radios errorMessage=(fieldError "Level") }}
-
-      <div class="required field">
-        <label>GPA</label>
-        <select class="ui dropdown" name="gpa">
-          <option value="">(Select One)</option>
-          <option value="4">4.0+</option>
-          <option value="3">3.0-3.9</option>
-          <option value="2">2.0-2.9</option>
-          <option value="1">1.0-1.9</option>
-        </select>
-        {{#if fieldError 'gpa' }}
-        <div class="ui error message">
-          <p>You must specify your GPA.</p>
-        </div>
-        {{/if}}
-      </div>
-
-      <div class="field">
-        <label>Majors</label>
-        <select multiple="" class="ui dropdown" name="majors">
-          <option value="">Select Major(s)</option>
-          <option value="physics">Physics</option>
-          <option value="math">Math</option>
-          <option value="biology">Biology</option>
-          <option value="computerscience">Computer Science</option>
-        </select>
-      </div>
-
+      {{> Text_Form_Control label="Name" required=true errorMessage=(fieldError "name")}}
+      {{> TextArea_Form_Control label="Bio" placeholder="Short bio statement here" errorMessage=(fieldError "bio")}}
+      {{> Checkbox_Form_Control label="Hobbies" checkboxes=hobbies }}
+      {{> Radio_Form_Control label="Level" name="Level" required=true radios=levels errorMessage=(fieldError "level") }}
+      {{> Select_Form_Control label="GPA" required=true options=GPAs errorMessage=(fieldError "gpa") }}
+      {{> Select_Form_Control label="Majors" options=majors errorMessage=(fieldError "majors") multiple=true }}
 
       <button class="ui primary button" type="submit">Submit</button>
 
@@ -46,7 +20,6 @@
       </div>
       {{/if}}
     </form>
-
 
   </div>
 </template>

@@ -1,6 +1,13 @@
 <template name="Radio_Field">
-  {{! parameters: label, name, id, value, checked. Label and name are required. }}
-  {{! id and value are optional and default to label. Checked is optional.}}
+  {{!
+    Provide a single radio button with associated label.
+
+    Parameters:
+      label, name, id, value. (String)
+      checked (Boolean). Optional.
+    Both label and name are required.
+    Id and value default to label.
+    }}
   <div class="field">
     <div class="ui radio checkbox">
       <input type="radio"

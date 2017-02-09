@@ -1,6 +1,13 @@
 <template name="Checkbox_Field">
-  {{! parameters: label, name, id, value, checked. }}
-  {{! name, id, and value are optional and default to label. }}
+  {{!
+  Helper function for Checkbox_Form_Control.
+
+  Parameters:
+    label, name, id, value (String)
+    checked (boolean)
+
+  Label is required. name, id, and value are optional and default to label.
+  }}
   <div class="field">
     <div class="ui checkbox">
       <input type="checkbox"

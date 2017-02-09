@@ -1,6 +1,32 @@
 <template name="Checkbox_Form_Control">
-  {{! parameters: label, checkboxes }}
-  {{! checkboxes is an array of objects. Required fields: name, value, label. Optional: id, checked }}
+  {{!
+  Implements a set of checkboxes.
+
+  Parameters:
+    label (String). Example: "Hobbies"
+    checkboxes (Array[Object]). Each object specifies the data for a checkbox item.
+               Example: { label: "Paddling", checked: true }
+
+  Here's what this template might look like when instantiated:
+
+  <div class="field">
+    <label>Hobbies</label>
+    <div class="fields">
+      <div class="field">
+        <div class="ui checkbox">
+          <input type="checkbox" name="Surfing" id="Surfing" value="Surfing">
+          <label>Surfing</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui checkbox">
+          <input type="checkbox" name="Paddling" id="Paddling" value="Paddling" checked=true>
+          <label>Paddling</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  }}
   <div class="field">
     <label>{{label}}</label>
     <div class="fields">

@@ -12,14 +12,12 @@ export const StudentDataSchema = new SimpleSchema({
   name: {
     label: 'Name',
     type: String,
-    max: 50,
   },
   bio: {
     label: 'Bio',
     type: String,
     optional: true,
     defaultValue: '',
-    max: 500,
   },
   hobbies: {
     label: 'Hobbies',

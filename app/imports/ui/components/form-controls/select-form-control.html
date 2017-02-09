@@ -1,0 +1,36 @@
+<template name="Select_Form_Control">
+  {{!
+   Provide a single or multiple drop-down select control.
+
+   Parameters:
+     label, name, errorMessage (String)
+     required, multiple (Boolean)
+     options (Array[Object]). Specifies each selection. Can have fields label, value, selected.
+       Example: [{ label: "4.0+", value: "4" } { label: "3.0-3.9", value: "3", selected: true }]
+   Setting multiple to true makes this a multi-selection controller.
+   Name is optional and defaults to label. errorMessage and required are optional.
+
+   Here's what this template might look like when instantiated:
+
+   <div class="field">
+     <label>GPA</label>
+     <select class="ui dropdown" name="GPA">
+       <option value="">(Select one)</option>
+       <option value="4">4.0+</option>
+       <option value="3" selected=true>3.0-3.9</option>
+     </select>
+   </div>
+  }}
+
+  <div class="{{#if required}}required{{/if}} field">
+    <label>{{label}}</label>
+    <select multiple="{{multiple}}" class="ui dropdown" name="{{#if name}}{{name}}{{else}}{{label}}{{/if}}">
+      <option value="">(Select {{#if multiple}}One or More{{else}}One{{/if}})</option>
+      {{#each option in options}}
+        <option value="{{#if option.value}}{{option.value}}{{else}}{{option.label}}{{/if}}"
+                selected="{{option.selected}}">{{option.label}}</option>
+      {{/each}}
+    </select>
+    {{> Form_Error_Message errorMessage=errorMessage}}
+  </div>
+</template>

@@ -1,25 +1,22 @@
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 import { StudentData, StudentDataSchema } from '../../api/studentdata/studentdata.js';
+import { hobbyList, levelList, GPAObjects, majorList } from './create-student-data-page.js';
 
-/* eslint-disable object-shorthand, no-unused-vars */
+/* eslint-disable object-shorthand, no-unused-vars, no-param-reassign */
 
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 
 Template.Edit_Student_Data_Page.onCreated(function onCreated() {
-  this.autorun(() => {
-    this.subscribe('StudentData');
-  });
+  this.subscribe('StudentData');
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = StudentDataSchema.namedContext('Edit_StudentData_Page');
 });
-
 
 Template.Edit_Student_Data_Page.helpers({
   studentDataField(fieldName) {
@@ -27,21 +24,40 @@ Template.Edit_Student_Data_Page.helpers({
     // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
     return studentData && studentData[fieldName];
   },
-  hobbyChecked(hobby) {
+  hobbies() {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return studentData && _.contains(studentData.hobbies, hobby) && true;
+    const selectedHobbies = studentData && studentData.hobbies;
+    return studentData && _.map(hobbyList,
+            function makeHobbyObject(hobby) {
+              return { label: hobby, checked: _.contains(selectedHobbies, hobby) };
+            });
   },
-  levelChecked(level) {
+  levels() {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return studentData && (studentData.level === level) && true;
+    const selectedLevel = studentData && studentData.level;
+    return studentData && _.map(levelList,
+            function makeLevelObject(level) {
+              return { label: level, checked: selectedLevel === level };
+            });
   },
-  gpaSelected(gpa) {
+  GPAs() {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return studentData && (studentData.gpa === gpa) && true;
+    const selectedGPA = studentData && studentData.gpa;
+    return studentData && _.map(GPAObjects,
+            function makeLevelObject(GPAObject) {
+              if (GPAObject.value === selectedGPA) {
+                GPAObject.selected = true;
+              }
+              return GPAObject;
+            });
   },
-  majorSelected(major) {
+  majors() {
     const studentData = StudentData.findOne(FlowRouter.getParam('_id'));
-    return studentData && _.contains(studentData.majors, major) && true;
+    const selectedMajors = studentData && studentData.majors;
+    return studentData && _.map(majorList,
+            function makeMajorObject(major) {
+              return { label: major, selected: _.contains(selectedMajors, major) };
+            });
   },
   successClass() {
     return Template.instance().messageFlags.get(displaySuccessMessage) ? 'success' : '';
@@ -52,47 +68,28 @@ Template.Edit_Student_Data_Page.helpers({
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';
   },
-  displayFieldError(fieldName) {
-    const errorKeys = Template.instance().context.invalidKeys();
-    return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
-  },
-});
-
-Template.Edit_Student_Data_Page.onRendered(function enableSemantic() {
-  const template = this;
-  template.subscribe('StudentData', () => {
-    // Use this template.subscribe callback to guarantee that the following code executes after subscriptions OK.
-    Tracker.afterFlush(() => {
-      // Use Tracker.afterFlush to guarantee that the DOM is re-rendered before calling JQuery.
-      template.$('select.ui.dropdown').dropdown();
-      template.$('.ui.selection.dropdown').dropdown();
-      template.$('select.dropdown').dropdown();
-      template.$('.ui.checkbox').checkbox();
-      template.$('.ui.radio.checkbox').checkbox();
-    });
-  });
 });
 
 Template.Edit_Student_Data_Page.events({
   'submit .student-data-form'(event, instance) {
     event.preventDefault();
     // Get name (text field)
-    const name = event.target.name.value;
+    const name = event.target.Name.value;
     // Get bio (text area).
-    const bio = event.target.bio.value;
+    const bio = event.target.Bio.value;
     // Get list of checked hobbies (checkboxes)
     const hobbies = [];
-    _.each(['surfing', 'running', 'biking', 'paddling'], function setHobby(hobby) {
+    _.each(hobbyList, function setHobby(hobby) {
       if (event.target[hobby].checked) {
         hobbies.push(event.target[hobby].value);
       }
     });
     // Radio buttons (Level)
-    const level = event.target.level.value;
+    const level = event.target.Level.value;
     // Drop down list (GPA)
-    const gpa = event.target.gpa.value;
+    const gpa = event.target.GPA.value;
     // Multiple select list  (Majors)
-    const selectedMajors = _.filter(event.target.majors.selectedOptions, (option) => option.selected);
+    const selectedMajors = _.filter(event.target.Majors.selectedOptions, (option) => option.selected);
     const majors = _.map(selectedMajors, (option) => option.value);
 
     const updatedStudentData = { name, bio, hobbies, level, gpa, majors };

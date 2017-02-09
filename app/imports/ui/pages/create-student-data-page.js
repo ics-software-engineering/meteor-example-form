@@ -8,6 +8,16 @@ import { StudentData, StudentDataSchema } from '../../api/studentdata/studentdat
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 
+// The form field structures to be shared by both the create page and the edit page.
+export const hobbyList = ['Surfing', 'Running', 'Biking', 'Paddling'];
+export const levelList = ['Freshman', 'Sophomore', 'Junior', 'Senior'];
+export const majorList = ['Physics', 'Math', 'Chemistry', 'Computer Science'];
+export const GPAObjects = [{ label: '4.0+', value: '4' },
+                           { label: '3.0-3.9', value: '3' },
+                           { label: '2.0-2.9', value: '2' },
+                           { label: '1.0-1.9', value: '1' }];
+
+
 Template.Create_Student_Data_Page.onCreated(function onCreated() {
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
@@ -30,43 +40,41 @@ Template.Create_Student_Data_Page.helpers({
     const errorObject = _.find(invalidKeys, (keyObj) => keyObj.name === fieldName);
     return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
   },
-  checkboxes() {
-    return [{ label: 'Surfing' }, { label: 'Running' }, { label: 'Biking' }, { label: 'Paddling' }];
+  hobbies() {
+    return _.map(hobbyList, function makeHobbyObject(hobby) { return { label: hobby }; });
   },
-  radios() {
-    return [{ label: 'Freshman' }, { label: 'Sophomore' }, { label: 'Junior' }, { label: 'Senior' }];
+  levels() {
+    return _.map(levelList, function makeLevelObject(level) { return { label: level }; });
+  },
+  GPAs() {
+    return GPAObjects;
+  },
+  majors() {
+    return _.map(majorList, function makeMajorObject(major) { return { label: major }; });
   },
 });
 
-Template.Create_Student_Data_Page.onRendered(function enableSemantic() {
-  const instance = this;
-  instance.$('select.ui.dropdown').dropdown();
-  instance.$('.ui.selection.dropdown').dropdown();
-  instance.$('select.dropdown').dropdown();
-  instance.$('.ui.checkbox').checkbox();
-  instance.$('.ui.radio.checkbox').checkbox();
-});
 
 Template.Create_Student_Data_Page.events({
   'submit .student-data-form'(event, instance) {
     event.preventDefault();
     // Get name (text field)
-    const name = event.target.name.value;
+    const name = event.target.Name.value;
     // Get bio (text area).
-    const bio = event.target.bio.value;
+    const bio = event.target.Bio.value;
     // Get hobbies (checkboxes, zero to many)
     const hobbies = [];
-    _.each(['surfing', 'running', 'biking', 'paddling'], function setHobby(hobby) {
+    _.each(hobbyList, function setHobby(hobby) {
       if (event.target[hobby].checked) {
         hobbies.push(event.target[hobby].value);
       }
     });
     // Get level (radio buttons, exactly one)
-    const level = event.target.level.value;
+    const level = event.target.Level.value;
     // Get GPA (single selection)
-    const gpa = event.target.gpa.value;
+    const gpa = event.target.GPA.value;
     // Get Majors (multiple selection)
-    const selectedMajors = _.filter(event.target.majors.selectedOptions, (option) => option.selected);
+    const selectedMajors = _.filter(event.target.Majors.selectedOptions, (option) => option.selected);
     const majors = _.map(selectedMajors, (option) => option.value);
 
     const newStudentData = { name, bio, hobbies, level, gpa, majors };
