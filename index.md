@@ -2,9 +2,10 @@ This sample application illustrates how to manipulate user input using forms wit
 
 * Displaying HTML forms using the [Semantic UI form classes](http://semantic-ui.com/collections/form.html).
 * Creating [a set of reusable Blaze templates for the standard form controllers](), including text, textarea, checkboxes, radio buttons, and single and multiple select lists. 
-* Validating form data upon submission and flagging fields that do not satisfy the associated [Meteor Simple Schema](https://github.com/aldeed/meteor-simple-schema).
+* Validating form data upon submission using [Meteor Simple Schema](https://github.com/aldeed/meteor-simple-schema).
+* Conditional display of page content using Reactive Dictionaries.
 * Inserting new documents into Mongo based upon form data, as well as retrieving and updating documents using forms.
-* foo.
+
 
 ## Prerequisites
 
@@ -52,17 +53,18 @@ User input should always be validated before being further processed by the syst
 
 #### Publications and subscriptions
 
-For arcane reasons, form processing using Semantic UI requires you to remove the autopublish package and to explicitly publish and subscribe to collections. 
+Form processing using Semantic UI requires you to remove the autopublish package and to explicitly publish and subscribe to collections. 
 
 For simplicity's sake, this example application publishes all of the StudentData collection in [publications.js](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/startup/server/publications.js). 
 
-This application only needs to subscribe to the collection on the Edit Student Data page, since that's the only page that needs to reference pre-existing StudentData.  Unfortunately, the subscription process is not at all straightforward: take a look at [edit-student-data-page.js#L61-L74](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L61-L74) .
+This application only needs to subscribe to the collection on the Edit Student Data page, since that's the only page that needs to reference pre-existing StudentData. The subscription occurs in [edit-student-data-page#L14](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L14).
 
-Ugh. The basic issue is this:  Semantic UI needs to invoke JQuery to initialize its fancy Javascript selection drop down processing apparatus. And JQuery needs the DOM to be rendered to work correctly.  Plus, we need to wait for the StudentData collection to be available.  Since Meteor is reactive, we normally don't worry about DOM manipulation and so forth, but Semantic UI forces us to worry about it because they require us to call JQuery. This solution (arrived at after much failed experimentation) is to subscribe to the data with a callback that sets another callback to be invoked after Tracker completes its rendering of the DOM. 
+#### Form controller templates
 
-The bright side of this? I believe this code snippet illustrates a general solution to the problem of "How do I integrate a third party library that depends upon JQuery into my Meteor app"? Maybe.
+The heart of this sample application is the [form-controls directory](https://github.com/ics-software-engineering/meteor-example-form/tree/master/app/imports/ui/components/form-controls), which provides templates for implementation of the standard HTML form controls (text, textarea, checkboxes, radio buttons, and single/muliple selection drop-downs).
 
-(If you think you know of a more simple way to handle this issue, please let me know or issue a pull request.)
+Consult the HTML files for documentation on how each control should be invoked and samples of the HTML code they produce. You can also see invocations of each of these templates in the [edit-student-data-page](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html) and [create-student-data-page](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.html).
+ 
 
 #### Create Student Data
 
@@ -70,42 +72,33 @@ Now let's get look at the first of the two pages: Create Student Data, and start
 
 [create-student-data-page.html](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.html) is the HTML template for accepting data for insertion into the StudentData collection. 
  
-This looks like fairly standard [Semantic UI Form](http://semantic-ui.com/collections/form.html) code. 
+It invokes controller templates to create the Name, Bio, Hobbies, Level, GPA, and Majors form controllers. 
 
 Note that [create-student-data-page.html#L5](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.html#L5) augments the "ui form" class declaration with two helpers: successClass and errorClass. These helpers return the strings "success" or "error" when the form has been successfully submitted or has been found to contain errors, respectively. Otherwise (such as when the page is first displayed), they return the empty string. So, think of the page as containing three states: "empty" (i.e. just retrieved), "success" (the form data was just submitted and there were no errors), or "error" (the form data was submitted and errors were found).
 
-[create-student-data-page.html#L13-L17](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.html#L13-L17) illustrates how error notifications are inserted. If the helper displayFieldError returns truthy, then the div is included in the page. It takes an argument indicating which field the div refers to.
-
-[create-student-data-page.html#L121-L125](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.html#L121-L125) shows a similar approach to the error fields, but this time the notification displayed indicates that the form data was valid and a new StudentData document was created and can now be edited on the other page. 
-
 Now let's turn to the Javascript side of Create Student Data.
 
-[create-student-data-page.js#L11-L16](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L11-L16) shows the onCreated handler.  This handler sets up a Reactive Dictionary to hold displaySuccessMessage, indicating if we want to display the success message, and displayErrorMessages, indicating if we want to display one or more error messages. Note that they are initialized to false, indicating that we are in the third state (neither success nor failure).
+[create-student-data-page.js#L11-L18](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L11-L18) defines the constants hobbyList, levelList, majorList, and GPAObjects. These constants are exported so that this data can be also used in the edit-student-data-page. 
 
-[create-student-data-page.js#L18-L32](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L18-L32) shows the helper functions for this page. They alter the appearance of the page through reactive variables (either through the messageFlags reactive dict or through the reactive variables created by the Simple Schema validation mechanism).
+[create-student-data-page.js#L21-L26](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L21-L26) shows the onCreated handler.  This handler sets up a Reactive Dictionary to hold displaySuccessMessage, indicating if we want to display the success message, and displayErrorMessages, indicating if we want to display one or more error messages. Note that they are initialized to false, indicating that we are in the third state (neither success nor failure).
 
-[create-student-data-page.js#L34-L41](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L34-L41) shows the onRendered callback function which is responsible for loading the Semantic UI javascript to make the form elements look good. Because there are no subscriptions on this page, the code is straightforward (in contrast to the code required for the Edit Student Data page).
+[create-student-data-page.js#L28-L55](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L28-L55) shows the helper functions for this page. They alter the appearance of the page through reactive variables (either through the messageFlags reactive dict or through the reactive variables created by the Simple Schema validation mechanism).
 
-
-[create-student-data-page.js#L44-L80](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L44-L80)  shows the events callback for handling the submit button event. As is usual in Meteor event processing, the first thing is to disable the default event handling. The following code provides examples of how to extract form values from the various input types: text fields, text areas, checkboxes, radio buttons, single selection, and multiple selection.  After this, the handler creates an object called newStudentData that gathers together these values.  
+[create-student-data-page.js#L58-L96](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/create-student-data-page.js#L58-L96)  shows the events callback for handling the submit button event. As is usual in Meteor event processing, the first thing is to disable the default event handling. The subsequent code extracts form values from the various input types: text fields, text areas, checkboxes, radio buttons, single selection, and multiple selection.  After this, the handler creates an object called newStudentData that gathers together these values.  
 
 This object is "cleaned" manually in order to make it correspond to the same object that will be checked by the Collection2 hook function as part of the insert process. Finally, we validate the form data and set the reactive variables appropriately.  Note that changing the reactive variable values is all that is needed to cause the page contents to be updated.  
 
 #### Edit Student Data
 
-The Edit Student Data HTML and Javascript duplicates some of the code from Create Student Data.  This is intentional for pedagogical reasons: I think it is easier to figure out how form processing works when the code for creation and updating are shown in isolation. That said, when you create your own production code, you might want to refactor out a "component" template to eliminate redundancy.
+The edit-student-data-page HTML and Javascript files are quite similar to their counterparts in create-student-data-page. The essential difference is that the page must initialize the form with the previously saved values. 
 
 In the HTML code, [edit-student-data-page#L3](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.html#L3) shows the first difference: the use of the Template.subscriptionsReady to delay the display of the page until the data is available. 
 
-The other significant difference on this page is the invocation of helper functions to provide values for all of the form values.  
+Moving to the Javascript code, [edit-student-data-page#L6](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L6) shows the import of the constants from create-student-data-page. This avoids having to duplicate those strings on two pages.  
 
-Moving to the Javascript code, [edit-student-data-page#L14-L16](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L14-L16) shows how to set up the subscription to the StudentData collection. In reality, this page does not need the entire StudentData collection, only the specific document referenced in the URL, so a more efficient solution would be a subscription that only retrieves a single document. But this approach was chosen as the simplest one since the focus is on form processing.
+[edit-student-data-page#L21-L61](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L21-L61) shows the implementation of the helper functions to provide values into the form. Note that these helper functions implement the [Meteor "guard" design pattern](https://dweldon.silvrback.com/guards) to prevent fields from being accessed when the associated object is not available.
 
-[edit-student-data-page#L25-L45](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L25-L45) shows the implementation of the helper functions to provide values into the form. Note that these helper functions implement the [Meteor "guard" design pattern](https://dweldon.silvrback.com/guards) to prevent fields from being accessed when the associated object is not available.
-
-[edit-student-data-page#L65-L72](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L65-L72) shows that in the case of this page where we have subscriptions, the Semantic UI Javascript initialization code must be in a Tracker.afterFlush callback which is itself in an onRendered callback. Wow.
-
-Finally, the submit event handler is just like the one in Create Student Data, except for [Line 108](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L108) which calls update rather than insert.
+Finally, the submit event handler is just like the one in Create Student Data, except for [Line 105](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/imports/ui/pages/edit-student-data-page.js#L105) which calls update rather than insert.
 
 ## Screencast
 
