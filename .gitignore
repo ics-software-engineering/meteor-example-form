@@ -12,3 +12,4 @@ settings.production.json
 
 # Build node_modules locally.
 node_modules/
+npm-debug.log
