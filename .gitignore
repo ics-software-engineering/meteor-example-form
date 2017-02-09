@@ -10,5 +10,6 @@
 # Don't commit the production settings file.
 settings.production.json
 
-# Build node_modules locally.
+# Build node_modules locally, don't store debug log
 node_modules/
+npm-debug.log
