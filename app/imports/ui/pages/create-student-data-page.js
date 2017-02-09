@@ -88,6 +88,8 @@ Template.Create_Student_Data_Page.events({
       const id = StudentData.insert(newStudentData);
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
+      instance.find('form').reset();
+      instance.$('.dropdown').dropdown('restore defaults');
     } else {
       instance.messageFlags.set(displaySuccessMessage, false);
       instance.messageFlags.set(displayErrorMessages, true);
