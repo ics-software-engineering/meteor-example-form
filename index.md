@@ -1,4 +1,9 @@
-This sample application illustrates how to manipulate user input using forms with [Meteor 1.4](http://meteor.com), [BlazeJS](http://blazejs.org/), and [Semantic UI](http://semantic-ui.com/). 
+This sample application illustrates how to manipulate user input using forms with [Meteor 1.4](http://meteor.com), [BlazeJS](http://blazejs.org/), and [Semantic UI](http://semantic-ui.com/). This involves:
+
+* Displaying HTML forms using the [Semantic UI form classes](http://semantic-ui.com/collections/form.html).
+* Creating [a set of reusable Blaze templates for the standard form controllers](), including text, textarea, checkboxes, radio buttons, and single and multiple select lists. 
+* Validating form data upon submission and flagging fields that do not satisfy the associated [Meteor Simple Schema](https://github.com/aldeed/meteor-simple-schema).
+* Inserting new documents into Mongo based upon form data, as well as retrieving and updating documents using forms.
 
 ## Prerequisites
 
