@@ -1,0 +1,10 @@
+<template name="Form_Error_Message">
+  {{!
+    If errorMessage is a non-empty string, then create a ui error message whose contents is that string.
+  }}
+  {{#if errorMessage }}
+    <div class="ui error message">
+      {{ errorMessage }}
+    </div>
+  {{/if}}
+</template>

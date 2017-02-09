@@ -1,0 +1,27 @@
+<template name="TextArea_Form_Control">
+  {{!
+    Implements a textarea field.
+
+    Parameters: required, label, name, id, placeholder, value, errorMessage, rows.
+      name, id, and placeholder are optional and default to label.
+      value and required are optional.
+      rows is optional and defaults to 5.
+
+    Here's an example:
+
+    <div class="required field">
+      <label>Bio</label>
+      <div class="field">
+        <textarea rows="5" name="Bio" id="Bio" placeholder="Your bio here">I am a student.</textarea>
+      </div>
+    </div>
+    }}
+  <div class="{{#if required}}required{{/if}} field">
+    <label>{{#if label}}{{label}}{{else}}{{name}}{{/if}}</label>
+    <textarea rows="{{#if rows}}{{rows}}{{else}}5{{/if}}"
+              name="{{#if name}}{{name}}{{else}}{{label}}{{/if}}"
+              id="{{#if id}}{{id}}{{else}}{{name}}{{/if}}"
+              placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{label}}{{/if}}">{{value}}</textarea>
+  </div>
+  {{> Form_Error_Message errorMessage=errorMessage}}
+</template>

@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor",
-    "lint": "eslint ."
+    "lint": "eslint --quiet ./imports"
   },
   "dependencies": {
     "bcrypt": "^0.8.7",

@@ -12,4 +12,8 @@ settings.production.json
 
 # Build node_modules locally, don't store debug log
 node_modules/
+<<<<<<< HEAD
 npm-debug.log
+=======
+npm-debug.log
+>>>>>>> spring-2017

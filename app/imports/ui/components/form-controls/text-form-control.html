@@ -1,0 +1,29 @@
+<template name="Text_Form_Control">
+  {{!
+    Implements a text field.
+
+    Parameters: required, label, name, id, placeholder, value, errorMessage.
+      name, id, and placeholder are optional and default to label.
+      value and required are optional.
+
+    Here's an example:
+
+    <div class="required field">
+      <label>Name</label>
+      <div class="field">
+        <input type="text" name="Name" id="Name" placeholder="Your name here">
+      </div>
+    </div>
+    }}
+  <div class="{{#if required}}required{{/if}} field">
+    <label>{{label}}</label>
+    <div class="field">
+      <input type="text"
+             name="{{#if name}}{{name}}{{else}}{{label}}{{/if}}"
+             id="{{#if id}}{{id}}{{else}}{{label}}{{/if}}"
+             placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{label}}{{/if}}"
+             value="{{value}}">
+    </div>
+    {{> Form_Error_Message errorMessage=errorMessage}}
+  </div>
+</template>

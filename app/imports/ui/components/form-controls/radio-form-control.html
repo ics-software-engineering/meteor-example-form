@@ -1,0 +1,37 @@
+<template name="Radio_Form_Control">
+  {{!
+    Provide a set of radio controls, only one of which can be selected at a time.
+
+    Parameters:
+      label, name, errorMessage (String). Label, name, radios are required.
+      required (Boolean)
+      radios: (Array[Object)). Each object specifies one radio button.
+        Example: [{ label: "Freshman" }, { label: "Sophomore", checked: true }]
+        Optional object fields: id and value. They default to label.
+
+   Here's what this template might look like when instantiated:
+
+    <div class="required field">
+      <label>Level</label>
+      <div class="fields">
+        <div class="ui radio checkbox">
+          <input type="radio" name="Level" id="Freshman" value="Freshman">
+          <label>Freshman</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="Level" id="Sophomore" value="Sophomore" checked=true>
+          <label>Sophomore</label>
+        </div>
+      </div>
+    </div>
+  }}
+  <div class="{{#if required}}required{{/if}} field">
+    <label>{{label}}</label>
+    <div class="fields">
+      {{#each radio in radios}}
+        {{> Radio_Field name=name label=radio.label checked=radio.checked}}
+      {{/each}}
+    </div>
+    {{> Form_Error_Message errorMessage=errorMessage}}
+  </div>
+</template>
