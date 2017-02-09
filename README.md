@@ -1,1 +1,1 @@
-Please see the home page. 
+Please see the [home page](https://ics-software-engineering.github.io/meteor-example-form/) for documentation.
