@@ -12,6 +12,7 @@ After [installing Meteor](https://www.meteor.com/install) and downloading this p
 
 ```
 meteor npm install
+meteor npm install --save babel-runtime
 ```
 
 Next, run the system with:
