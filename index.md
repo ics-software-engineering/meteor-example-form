@@ -22,6 +22,21 @@ meteor npm run start
 
 That will invoke the script in the [package.json](https://github.com/ics-software-engineering/meteor-example-form/blob/master/app/package.json) to run meteor. To speed up the process, the script disables release checking.
 
+**Note regarding bcrypt warning.** You will get the following message when you run this application:
+
+```
+Note: you are using a pure-JavaScript implementation of bcrypt.
+While this implementation will work correctly, it is known to be
+approximately three times slower than the native implementation.
+In order to use the native implementation instead, run
+
+  meteor npm install --save bcrypt
+
+in the root directory of your application.
+```
+
+On some operating systems (particularly Windows), installing bcrypt is much more difficult than implied by the above message. Bcrypt is only used in Meteor for password checking, so the performance implications are negligible until your site has very high traffic. You can safely ignore this warning without any problems.
+
 You can also run ESLint over the source code with:
 
 ```
