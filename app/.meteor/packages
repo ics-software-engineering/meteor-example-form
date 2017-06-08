@@ -21,10 +21,8 @@ standard-minifier-js@2.1.0
 shell-server@0.2.3
 
 # Collection utilities
-aldeed:collection2
 
 # Form processing utilities
-aldeed:autoform
 
 # Loading spinner
 sacha:spin
@@ -44,7 +42,6 @@ semantic:ui
 juliancwirko:postcss
 less@2.7.9
 useraccounts:semantic-ui
-fabienb4:autoform-semantic-ui
 
 # For prototyping purposes, enable autopublish and insecure
 insecure@1.0.7
@@ -53,3 +50,4 @@ insecure@1.0.7
 mdg:validation-error
 reactive-dict@1.1.9
 dynamic-import
+aldeed:collection2-core@2.0.0
