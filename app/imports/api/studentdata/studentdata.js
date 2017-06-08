@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
+import { Tracker } from 'meteor/tracker';
 
 /* eslint-disable object-shorthand */
 
@@ -37,6 +38,6 @@ export const StudentDataSchema = new SimpleSchema({
     type: Array,
   },
   'majors.$': String,
-});
+}, { tracker: Tracker });
 
 StudentData.attachSchema(StudentDataSchema);

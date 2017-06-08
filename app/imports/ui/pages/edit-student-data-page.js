@@ -95,14 +95,14 @@ Template.Edit_Student_Data_Page.events({
     const updatedStudentData = { name, bio, hobbies, level, gpa, majors };
 
     // Clear out any old validation errors.
-    instance.context.resetValidation();
+    instance.context.reset();
     // Invoke clean so that newStudentData reflects what will be inserted.
-    StudentDataSchema.clean(updatedStudentData);
+    const cleanData = StudentDataSchema.clean(updatedStudentData);
     // Determine validity.
-    instance.context.validate(updatedStudentData);
+    instance.context.validate(cleanData);
 
     if (instance.context.isValid()) {
-      const id = StudentData.update(FlowRouter.getParam('_id'), { $set: updatedStudentData });
+      const id = StudentData.update(FlowRouter.getParam('_id'), { $set: cleanData });
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
     } else {

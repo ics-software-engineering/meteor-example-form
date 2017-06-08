@@ -74,13 +74,13 @@ Template.Create_Student_Data_Page.events({
 
     const newStudentData = { name, bio, hobbies, level, gpa, majors };
     // Clear out any old validation errors.
-    instance.context.resetValidation();
+    instance.context.reset();
     // Invoke clean so that newStudentData reflects what will be inserted.
-    StudentDataSchema.clean(newStudentData);
+    const cleanData = StudentDataSchema.clean(newStudentData);
     // Determine validity.
-    instance.context.validate(newStudentData);
+    instance.context.validate(cleanData);
     if (instance.context.isValid()) {
-      const id = StudentData.insert(newStudentData);
+      const id = StudentData.insert(cleanData);
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
       instance.find('form').reset();
