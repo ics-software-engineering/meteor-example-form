@@ -2,7 +2,7 @@ This sample application illustrates how to manipulate user input using forms wit
 
 * Displaying HTML forms using the [Semantic UI form classes](http://semantic-ui.com/collections/form.html).
 * Creating [a set of reusable Blaze templates for the standard form controllers](), including text, textarea, checkboxes, radio buttons, and single and multiple select lists. 
-* Validating form data upon submission using [Meteor Simple Schema](https://github.com/aldeed/meteor-simple-schema).
+* Validating form data upon submission using [Node Simple Schema](https://github.com/aldeed/node-simple-schema).
 * Conditional display of page content using Reactive Dictionaries.
 * Inserting new documents into Mongo based upon form data, as well as retrieving and updating documents using forms.
 
@@ -54,7 +54,7 @@ To best understand this application, it is useful to first familiarize yourself 
  
 * [Semantic UI Forms](http://semantic-ui.com/collections/form.html). Read this documentation to learn the CSS classes defined by Semantic UI to create nicely styled forms.
 
-* [Validating data with Simple Schema](https://github.com/aldeed/meteor-simple-schema#validating-data). Actually, you'll probably need to familiarize yourself with all of Simple Schema, but the section on data validation is crucial to understanding this sample application.
+* [Validating data with Simple Schema](https://github.com/aldeed/node-simple-schema#validating-data). Actually, you'll probably need to familiarize yourself with all of Simple Schema, but the section on data validation is crucial to understanding this sample application.
 
 * [Reactive Dict, Reactive Vars, and Session Variables](https://themeteorchef.com/snippets/reactive-dict-reactive-vars-and-session-variables/).  This application uses Reactive Dictionaries. I found this blog posting to be a very concise and useful explanation of them and how they relate to other mechanisms like Session variables.
 
@@ -147,26 +147,4 @@ Click the image below to watch a 19 minute walkthrough of this system.
 ## Miscellaneous issues
 
 This sample application includes the insecure package.  In production settings, you will need to create Meteor methods and invoke them in the submit event handlers rather than calling the insert and update operations directly.  
-
-This code represents my best understanding of form processing for Meteor 1.4 and Semantic UI, but there may be better ways to do it. Please contact me (or issue a pull request) with your suggestions; they are appreciated.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
