@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
 import { StudentData, StudentDataSchema } from '../../api/studentdata/studentdata.js';
@@ -7,6 +8,11 @@ import { StudentData, StudentDataSchema } from '../../api/studentdata/studentdat
 
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
+const createContext = StudentDataSchema.namedContext('Create_StudentData_Page');
+
+Tracker.autorun(function () {
+  console.log('autorum', createContext.isValid(), createContext.validationErrors());
+});
 
 // The form field structures to be shared by both the create page and the edit page.
 export const hobbyList = ['Surfing', 'Running', 'Biking', 'Paddling'];
@@ -22,7 +28,7 @@ Template.Create_Student_Data_Page.onCreated(function onCreated() {
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
-  this.context = StudentDataSchema.namedContext('Create_StudentData_Page');
+  this.context = createContext;
 });
 
 Template.Create_Student_Data_Page.helpers({
@@ -34,12 +40,6 @@ Template.Create_Student_Data_Page.helpers({
   },
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';
-  },
-  fieldError(fieldName) {
-    console.log('invoke fieldError');
-    const invalidKeys = Template.instance().context.invalidKeys();
-    const errorObject = _.find(invalidKeys, (keyObj) => keyObj.name === fieldName);
-    return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
   },
   hobbies() {
     return _.map(hobbyList, function makeHobbyObject(hobby) { return { label: hobby }; });
@@ -80,13 +80,13 @@ Template.Create_Student_Data_Page.events({
 
     const newStudentData = { name, bio, hobbies, level, gpa, majors };
     // Clear out any old validation errors.
-    instance.context.resetValidation();
+    instance.context.reset();
     // Invoke clean so that newStudentData reflects what will be inserted.
-    StudentDataSchema.clean(newStudentData);
+    const cleanData = StudentDataSchema.clean(newStudentData);
     // Determine validity.
-    instance.context.validate(newStudentData);
+    instance.context.validate(cleanData);
     if (instance.context.isValid()) {
-      const id = StudentData.insert(newStudentData);
+      const id = StudentData.insert(cleanData);
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
       instance.find('form').reset();

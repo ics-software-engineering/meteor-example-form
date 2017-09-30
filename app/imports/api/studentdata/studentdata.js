@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
+import { Tracker } from 'meteor/tracker';
 
 /* eslint-disable object-shorthand */
 
@@ -21,8 +22,9 @@ export const StudentDataSchema = new SimpleSchema({
   },
   hobbies: {
     label: 'Hobbies',
-    type: [String],
+    type: Array,
   },
+  'hobbies.$': String,
   level: {
     label: 'Level',
     type: String,
@@ -33,8 +35,9 @@ export const StudentDataSchema = new SimpleSchema({
   },
   majors: {
     label: 'Majors',
-    type: [String],
+    type: Array,
   },
-});
+  'majors.$': String,
+}, { tracker: Tracker });
 
 StudentData.attachSchema(StudentDataSchema);
