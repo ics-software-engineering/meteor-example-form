@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import { Tracker } from 'meteor/tracker';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
 import { StudentData, StudentDataSchema } from '../../api/studentdata/studentdata.js';
@@ -9,10 +8,6 @@ import { StudentData, StudentDataSchema } from '../../api/studentdata/studentdat
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 const createContext = StudentDataSchema.namedContext('Create_StudentData_Page');
-
-Tracker.autorun(function () {
-  console.log('autorum', createContext.isValid(), createContext.validationErrors());
-});
 
 // The form field structures to be shared by both the create page and the edit page.
 export const hobbyList = ['Surfing', 'Running', 'Biking', 'Paddling'];
